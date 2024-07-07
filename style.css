@@ -20,8 +20,11 @@
   td {
     border: solid 1px white !important;
     position: relative;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
     &:hover {
-      background-color: rgba(255, 255, 255, 0.082) !important;
+      background-color: rgba(255, 255, 255, 0.24) !important;
+      transition: all 0.3s ease-in-out;
     }
   }
 }
