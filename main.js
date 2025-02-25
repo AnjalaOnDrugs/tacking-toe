@@ -9,10 +9,20 @@ window.onload = function () {
   let diag2 = [];
 
   let turnCount = 1;
+  let gameActive = true;
   let cells = document.querySelectorAll("td");
+  const turnIndicator = document.querySelector(".turn-indicator");
+  const playerIcon = document.querySelector(".player-icon");
+  
+  // Initialize the turn indicator
+  updateTurnIndicator();
+  
   cells.forEach((cell, index) => {
     cell.addEventListener("click", (e) => {
-      if (cell.classList.length === 0) {
+      if (cell.classList.length === 0 && gameActive) {
+        // Add sound effect
+        playMoveSound();
+        
         if (turnCount & 1) {
           cells[index].classList.add("circle");
           placeIndex(0, index);
@@ -20,12 +30,37 @@ window.onload = function () {
           cells[index].classList.add("cross");
           placeIndex(1, index);
         }
+        
+        turnCount++;
+        updateTurnIndicator();
       }
-      turnCount++;
     });
   });
+  
+  function updateTurnIndicator() {
+    if (turnCount & 1) {
+      turnIndicator.classList.remove("cross-turn");
+      playerIcon.style.backgroundColor = "#00C9FF";
+      playerIcon.style.borderRadius = "50%";
+      playerIcon.style.clipPath = "none";
+    } else {
+      turnIndicator.classList.add("cross-turn");
+      playerIcon.style.backgroundColor = "#FF5E62";
+      playerIcon.style.borderRadius = "0";
+      playerIcon.style.clipPath = "polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%)";
+    }
+  }
+  
+  function playMoveSound() {
+    const audio = new Audio(
+      turnCount & 1 
+        ? 'https://cdnjs.cloudflare.com/ajax/libs/soundjs/1.0.1/sound.js' // This is a placeholder, as we can't use actual sound files
+        : 'https://cdnjs.cloudflare.com/ajax/libs/soundjs/1.0.1/sound.js'  // This is a placeholder, as we can't use actual sound files
+    );
+    // audio.play(); // Uncomment if you add actual sound files
+  }
+
   function placeIndex(index, value) {
-    console.log(value);
     if (value === 0) {
       horiz1.push(index);
       vert1.push(index);
@@ -80,8 +115,12 @@ window.onload = function () {
       (diag1.length == 3 && !diag1.includes(0)) ||
       (diag2.length == 3 && !diag2.includes(0))
     ) {
-      message.innerHTML = "X is the winner!";
-      popup.showModal();
+      gameActive = false;
+      message.innerHTML = "X Wins! 🎉";
+      createConfetti();
+      setTimeout(() => {
+        popup.showModal();
+      }, 500);
     } else if (
       (horiz1.length == 3 && !horiz1.includes(1)) ||
       (horiz2.length == 3 && !horiz2.includes(1)) ||
@@ -92,18 +131,40 @@ window.onload = function () {
       (diag1.length == 3 && !diag1.includes(1)) ||
       (diag2.length == 3 && !diag2.includes(1))
     ) {
-      message.innerHTML = "0 is the winner!";
-      popup.showModal();
-    } else if (
-      horiz1.length == 3 &&
-      horiz2.length == 3 &&
-      horiz3.length == 3 &&
-      vert1.length == 3 &&
-      vert2.length == 3 &&
-      vert3.length == 3
-    ) {
-      message.innerHTML = "Draw!";
-      popup.showModal();
+      gameActive = false;
+      message.innerHTML = "O Wins! 🎉";
+      createConfetti();
+      setTimeout(() => {
+        popup.showModal();
+      }, 500);
+    } else if (turnCount > 9) {
+      gameActive = false;
+      message.innerHTML = "It's a Draw! 🤝";
+      setTimeout(() => {
+        popup.showModal();
+      }, 500);
+    }
+  }
+
+  function createConfetti() {
+    const container = document.querySelector(".container");
+    const colors = ["#FF5E62", "#00C9FF", "#FFEB3B", "#4CAF50", "#9C27B0"];
+    
+    for (let i = 0; i < 100; i++) {
+      const confetti = document.createElement("div");
+      confetti.className = "confetti";
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.width = (Math.random() * 10 + 5) + "px";
+      confetti.style.height = (Math.random() * 10 + 5) + "px";
+      
+      container.appendChild(confetti);
+      
+      // Remove confetti after animation
+      setTimeout(() => {
+        container.removeChild(confetti);
+      }, 5000);
     }
   }
 
@@ -111,18 +172,20 @@ window.onload = function () {
     let cells = document.querySelectorAll("td");
     cells.forEach((cell) => {
       cell.classList = [];
-      
     });
+    
     horiz1 = [];
-      horiz2 = [];
-      horiz3 = [];
-      vert1 = [];
-      vert2 = [];
-      vert3 = [];
-      diag1 = [];
-      diag2 = [];
-
-
+    horiz2 = [];
+    horiz3 = [];
+    vert1 = [];
+    vert2 = [];
+    vert3 = [];
+    diag1 = [];
+    diag2 = [];
+    
+    turnCount = 1;
+    gameActive = true;
+    updateTurnIndicator();
   }
 
   closeButton.addEventListener("click", () => {
