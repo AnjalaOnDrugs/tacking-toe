@@ -1,101 +1,50 @@
-* {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-.container {
-  background-color: black !important;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.table {
-  border: solid 1px white !important;
-  width: 500px;
-  height: 500px;
-
-  td {
-    border: solid 1px white !important;
-    position: relative;
-    transition: all 0.3s ease-in-out;
-    cursor: pointer;
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.24) !important;
-      transition: all 0.3s ease-in-out;
-    }
-  }
-}
-.cross {
-  &::after {
-    content: "";
-    width: 100px;
-    height: 100px;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    position: absolute;
-    background-color: white;
-    clip-path: polygon(
-      20% 0%,
-      0% 20%,
-      30% 50%,
-      0% 80%,
-      20% 100%,
-      50% 70%,
-      80% 100%,
-      100% 80%,
-      70% 50%,
-      100% 20%,
-      80% 0%,
-      50% 30%
-    );
-  }
-}
-.circle {
-  &::before {
-    content: "";
-    width: 100px;
-    height: 100px;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    position: absolute;
-    border: 20px solid white;
-    border-radius: 50%;
-  }
-}
-
-.dialog {
-  width: 300px;
-  height: 300px;
-  margin-inline: auto;
-  margin-block: auto;
-  position: absolute;
-  opacity: 80%;
-  border: 5px solid rgb(139, 212, 255);
-
-  .winner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    height: 100%;
-    gap: 10px;
-    
-  }
-
-  #dialog-text {
-    flex-basis: 100%;
-    text-align: center;
-  }
-
-  span {
-    background-color: rgb(139, 212, 255);
-    width: fit-content;
-    padding: 10px 10px;
-  }
-}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <script src="main.js"></script>
+    <title>Tic-Tac-Toe</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="game-title">Tic-Tac-Toe</h1>
+      <table class="table">
+        <tr class="row">
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr class="row">
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr class="row">
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      
+      <div class="turn-indicator">
+        <span>Current turn:</span>
+        <div class="player-icon"></div>
+      </div>
+      
+      <dialog class="dialog" id="dialog">
+        <div class="winner">
+          <p id="dialog-text">Player wins!</p>
+          <div class="dialog-buttons">
+            <span id="close">OK</span>
+            <span id="New-game">New Game</span>
+          </div>
+        </div>
+      </dialog>
+    </div>
+  </body>
+</html>
