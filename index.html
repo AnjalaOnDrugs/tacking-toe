@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
-    <title>Document</title>
+    <script src="main.js"></script>
+    <title>Tic-Tac-Toe</title>
   </head>
   <body>
     <div class="container">
+      <h1 class="game-title">Tic-Tac-Toe</h1>
       <table class="table">
         <tr class="row">
           <td></td>
@@ -26,11 +30,19 @@
           <td></td>
         </tr>
       </table>
+      
+      <div class="turn-indicator">
+        <span>Current turn:</span>
+        <div class="player-icon"></div>
+      </div>
+      
       <dialog class="dialog" id="dialog">
         <div class="winner">
-          <p id="dialog-text">This modal dialog has a groovy backdrop!</p>
-          <span id="close">OK</span>
-          <span id="New-game">New Game</span>
+          <p id="dialog-text">Player wins!</p>
+          <div class="dialog-buttons">
+            <span id="close">OK</span>
+            <span id="New-game">New Game</span>
+          </div>
         </div>
       </dialog>
     </div>
